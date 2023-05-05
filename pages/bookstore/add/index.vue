@@ -10,13 +10,29 @@ const form = ref({
   bookFeatured: false,
 });
 
-const submit = () => {
+const submit = async () => {
   if (form.value.bookName == "" || form.value.bookAuthor == "") {
     return;
   }
+  try {
+    const { data } = await useFetch("/api/book/add", {
+      method: "POST",
+      body: {
+        bookName: form.value.bookName,
+        bookSynopsis: form.value.bookSynopsis,
+        bookAuthor: form.value.bookAuthor,
+      },
+    });
 
-  
-  console.log(form.value);
+    if (data.value.statusCode == 200) {
+      alert("Success");
+      window.location.href = `/bookstore`;
+    } else {
+      alert("Failed");
+    }
+  } catch (error) {
+    return;
+  }
 };
 
 // function submit() {
@@ -64,7 +80,7 @@ const submit = () => {
               required: 'Pengarang buku tidak boleh kosong',
             }"
           />
-          <rs-button @click="submit"> Submit </rs-button>
+          <rs-button> Submit </rs-button>
         </FormKit>
       </template>
     </rs-card>

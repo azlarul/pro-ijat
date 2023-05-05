@@ -16,27 +16,46 @@ const form = ref({
   bookFeatured: false,
 });
 
-const bookData = ref([
-  {
-    bookID: 1,
-    bookName: "The Lord of the Rings",
-    bookSynopsis:
-      "The Lord of the Rings is an epic high-fantasy novel written by English author and scholar J. R. R. Tolkien.",
-    bookAuthor: "Adi Iman",
-    bookFeatured: true,
+const { data } = await useFetch("/api/book/getbook", {
+  method: "GET",
+  query: {
+    bookID: paramID,
   },
-]);
+});
 
-form.value.bookName = bookData.value[0].bookName;
-form.value.bookSynopsis = bookData.value[0].bookSynopsis;
-form.value.bookAuthor = bookData.value[0].bookAuthor;
+if (data.value.statusCode == 200) {
+  form.value.bookName = data.value.data.bookName;
+  form.value.bookSynopsis = data.value.data.bookSynopsis;
+  form.value.bookAuthor = data.value.data.bookAuthor;
+  form.value.bookFeatured = data.value.data.bookFeatured;
+} else {
+  alert("Tiada Buku Dengan ID Ini");
+}
 
-const submit = () => {
+const submit = async () => {
   if (form.value.bookName == "" || form.value.bookAuthor == "") {
     return;
   }
 
-  console.log(form.value);
+  try {
+    const { data } = await useFetch("/api/book/edit", {
+      method: "POST",
+      body: {
+        bookId: paramID,
+        bookName: form.value.bookName,
+        bookSynopsis: form.value.bookSynopsis,
+        bookAuthor: form.value.bookAuthor,
+      },
+    });
+
+    if (data.value.statusCode == 200) {
+      alert("Success");
+    } else {
+      alert("Failed");
+    }
+  } catch (error) {
+    return;
+  }
 };
 
 // function submit() {
@@ -84,7 +103,7 @@ const submit = () => {
               required: 'Pengarang buku tidak boleh kosong',
             }"
           />
-          <rs-button @click="submit"> Submit </rs-button>
+          <rs-button> Submit </rs-button>
         </FormKit>
       </template>
     </rs-card>

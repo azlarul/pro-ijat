@@ -3,40 +3,13 @@ definePageMeta({
   title: "bookstore",
 });
 
-const bookData = ref([
-  {
-    bookID: 1,
-    bookName: "The Lord of the Rings",
-    bookSynopsis:
-      "The Lord of the Rings is an epic high-fantasy novel written by English author and scholar J. R. R. Tolkien.",
-    bookAuthor: "Adi Iman",
-    bookFeatured: true,
-  },
-  {
-    bookID: 2,
-    bookName: "The Lord of the Rings 2",
-    bookSynopsis:
-      "The Lord of the Rings is an epic high-fantasy novel written by English author and scholar J. R. R. Tolkien.",
-    bookAuthor: "Adi Iman",
-    bookFeatured: true,
-  },
-  {
-    bookID: 3,
-    bookName: "The Lord of the Rings 3",
-    bookSynopsis:
-      "The Lord of the Rings is an epic high-fantasy novel written by English author and scholar J. R. R. Tolkien.",
-    bookAuthor: "Adi Iman",
-    bookFeatured: false,
-  },
-  {
-    bookID: 4,
-    bookName: "The Lord of the Rings 4",
-    bookSynopsis:
-      "The Lord of the Rings is an epic high-fantasy novel written by English author and scholar J. R. R. Tolkien.",
-    bookAuthor: "Adi Iman",
-    bookFeatured: false,
-  },
-]);
+// const bookData = ref([]);
+
+const { data: bookData } = await useFetch("/api/book/list", {
+  method: "GET",
+});
+
+console.log(bookData);
 </script>
 <template>
   <div>
@@ -52,7 +25,7 @@ const bookData = ref([
       </nuxt-link>
     </p>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6">
-      <rs-card class="p-5 relative" v-for="(val, index) in bookData">
+      <rs-card class="p-5 relative" v-for="(val, index) in bookData.data">
         <rs-badge
           v-if="val.bookFeatured == true"
           variant="warning"

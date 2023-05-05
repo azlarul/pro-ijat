@@ -34,7 +34,7 @@ function toggleMenu(event) {
   <div class="content-page duration-300">
     <slot />
   </div>
-  <RSConfigMenu />
+  <!-- <RSConfigMenu /> -->
   <div @click="toggleMenu" class="menu-overlay"></div>
 
   <!-- <RSFooter /> -->
