@@ -86,3 +86,10 @@ model pagecontent {
 
   @@index([pageContentPageID], map: "FK__page")
 }
+
+model book {
+  bookID       Int     @id @default(autoincrement())
+  bookName     String?
+  bookSynopsis String?
+  bookAuthor   String?
+}

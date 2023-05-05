@@ -9,6 +9,13 @@ export default [
         "icon": "ic:outline-dashboard",
         "child": [],
         "meta": {}
+      },
+      {
+        "title": "Bookstore",
+        "path": "/bookstore",
+        "icon": "material-symbols:menu-book-outline",
+        "child": [],
+        "meta": {}
       }
     ]
   },
