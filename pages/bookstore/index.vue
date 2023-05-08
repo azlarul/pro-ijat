@@ -8,7 +8,7 @@ definePageMeta({
 const { data: bookData } = await useFetch("/api/book/list", {
   method: "GET",
 });
-
+//test
 console.log(bookData);
 </script>
 <template>
